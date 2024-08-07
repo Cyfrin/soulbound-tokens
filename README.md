@@ -8,13 +8,23 @@ Source code: [`IssuerSoulboundToken`](./src/ERC5484/IssuerSoulboundToken.sol)
 
 ### Identity Usecase
 
-As an issuer of an identity, I can verify multiple methods of authentication for a "soul" (Web2 logins, 2FA, Yubikey, Ethereum wallet signature, etc), and store the resulting connections between them.
+**Key**: _soul = person._
 
-Once a certain threshold of authentication is reached, I can issue a soulbound token to the chosen address of the "soul", by calling the `issue` function.
+As an issuer, I can verify multiple methods of authentication for a soul (OAuth, 2FA, Yubikey signature, Ethereum wallet signature, etc), and store the resulting connections between them offchain.
 
-In the event that a receiver of a token rotates their onchain private keys (or loses access to them for any reason), they must put a request to the issuer (me) to burn from the previous address, and reissue to the new address.
+Once a certain threshold of authentication is reached, I can issue a Soulbound token to the chosen address of the soul, by calling the `issue` function.
 
-As the issuer, I must perform authentication via the previously verified authentication methods for that "soul". Once authenticated, I can be confident that the "soul" is in fact the same "soul" as was previously issued the token. I can then reissue the token by calling the `reissue` function.
+If a soul who receives a token rotates their onchain private keys (or loses access to them for any reason), they put a request to me, the issuer, to burn from the previous address and reissue to the new address.
+
+As the issuer, I must perform authentication on the soul via the previously verified authentication methods. Once authenticated via multiple means and the connections between them are verified, I can be confident that the soul is in fact the same soul as was previously issued the token. I can then reissue the token by calling the `reissue` function, to the new onchain address.
+
+___
+
+From the perspective of the soul, this token acts as proof of identity that is tied to an offchain identity issuer.
+
+When I log into other web3 Dapps that support the ERC721 NFT standard, my Soulbound token will be supported. This can be used in conjunction with other NFTs like ENS, certifications issued similarly to this Soulbound token, or POAPs; to aggregate a sense of identity and confidence about personhood.
+
+This has the potential to unlock use cases for Web3 that are not yet realized, like uncollateralized loans.
 
 ### ERC5484 Overview
 _**[Original ERC Specification](https://eips.ethereum.org/EIPS/eip-5484).**_
