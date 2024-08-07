@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: CC0-1.0
 pragma solidity 0.8.26;
+/// @notice https://eips.ethereum.org/EIPS/eip-5484
 
 interface IERC5484 {
     /// A guideline to standardlize burn-authorization's number coding
