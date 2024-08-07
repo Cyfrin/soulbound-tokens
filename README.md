@@ -6,7 +6,7 @@ Simple Soulbound Token where the token issuer is responsible for minting and bur
 
 Source code: [`IssuerSoulboundToken`](./src/ERC5484/IssuerSoulboundToken.sol)
 
-## Identity Usecase
+### Identity Usecase
 
 As an issuer of an identity, I can verify multiple methods of authentication for a "soul" (Web2 logins, 2FA, Yubikey, Ethereum wallet signature, etc), and store the resulting connections between them.
 
@@ -16,7 +16,7 @@ In the event that a receiver of a token rotates their onchain private keys (or l
 
 As the issuer, I must perform authentication via the previously verified authentication methods for that "soul". Once authenticated, I can be confident that the "soul" is in fact the same "soul" as was previously issued the token. I can then reissue the token by calling the `reissue` function.
 
-## ERC5484 Overview
+### ERC5484 Overview
 _**[Original ERC Specification](https://eips.ethereum.org/EIPS/eip-5484).**_
 
 This ERC extends the basic ERC721 NFT standard, imposing the following rules:
