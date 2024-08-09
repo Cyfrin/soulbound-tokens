@@ -2,10 +2,10 @@
 pragma solidity 0.8.26;
 
 import {Test, console} from "forge-std/Test.sol";
-import {IssuerSoulboundToken, AdminCanPause} from "../src/ERC5484/IssuerSoulboundToken.sol";
+import {IssuerSoulboundToken, AdminCanPause} from "../../src/ERC5484/IssuerSoulboundToken.sol";
 import {IAccessControl, AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
-import {IERC5484} from "../src/ERC5484/IERC5484.sol";
+import {IERC5484} from "../../src/ERC5484/IERC5484.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
