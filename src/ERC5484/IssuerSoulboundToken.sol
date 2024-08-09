@@ -96,18 +96,22 @@ contract IssuerSoulboundToken is IERC5484, ERC721, AdminCanPause {
         return "";
     }
 
+    // aderyn-ignore-next-line
     function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
         revert SoulboundRestricted();
     }
 
+    // aderyn-ignore-next-line
     function transferFrom(address, address, uint256) public pure override {
         revert SoulboundRestricted();
     }
 
+    // aderyn-ignore-next-line
     function approve(address, uint256) public pure override {
         revert SoulboundRestricted();
     }
 
+    // aderyn-ignore-next-line
     function setApprovalForAll(address, bool) public pure override {
         revert SoulboundRestricted();
     }
@@ -120,6 +124,7 @@ contract IssuerSoulboundToken is IERC5484, ERC721, AdminCanPause {
 
     // ERC 165
 
+    // aderyn-ignore-next-line
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
         return interfaceId == type(IERC5484).interfaceId || super.supportsInterface(interfaceId);
     }

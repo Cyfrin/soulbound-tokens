@@ -55,13 +55,13 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 	contract AdminCanPause is AccessControl, Pausable {
 	```
 
-- Found in src/AdminCanPause.sol [Line: 13](src/AdminCanPause.sol#L13)
+- Found in src/AdminCanPause.sol [Line: 12](src/AdminCanPause.sol#L12)
 
 	```solidity
 	    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
 	```
 
-- Found in src/AdminCanPause.sol [Line: 17](src/AdminCanPause.sol#L17)
+- Found in src/AdminCanPause.sol [Line: 16](src/AdminCanPause.sol#L16)
 
 	```solidity
 	    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -93,38 +93,8 @@ Contracts have owners with privileged rights to perform admin tasks and need to 
 
 Instead of marking a function as `public`, consider marking it as `external` if it is not used internally.
 
-<details><summary>5 Found Instances</summary>
+<details><summary>0 Found Instances</summary>
 
-
-- Found in src/ERC5484/IssuerSoulboundToken.sol [Line: 99](src/ERC5484/IssuerSoulboundToken.sol#L99)
-
-	```solidity
-	    function safeTransferFrom(address, address, uint256, bytes memory) public pure override {
-	```
-
-- Found in src/ERC5484/IssuerSoulboundToken.sol [Line: 103](src/ERC5484/IssuerSoulboundToken.sol#L103)
-
-	```solidity
-	    function transferFrom(address, address, uint256) public pure override {
-	```
-
-- Found in src/ERC5484/IssuerSoulboundToken.sol [Line: 107](src/ERC5484/IssuerSoulboundToken.sol#L107)
-
-	```solidity
-	    function approve(address, uint256) public pure override {
-	```
-
-- Found in src/ERC5484/IssuerSoulboundToken.sol [Line: 111](src/ERC5484/IssuerSoulboundToken.sol#L111)
-
-	```solidity
-	    function setApprovalForAll(address, bool) public pure override {
-	```
-
-- Found in src/ERC5484/IssuerSoulboundToken.sol [Line: 123](src/ERC5484/IssuerSoulboundToken.sol#L123)
-
-	```solidity
-	    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, AccessControl) returns (bool) {
-	```
 
 </details>
 
