@@ -4,7 +4,7 @@
 
 Simple Soulbound Token where the token issuer is responsible for minting and burning.
 
-Source code: [`IssuerSoulboundToken`](./src/ERC5484/IssuerSoulboundToken.sol)
+[More details on the ERC5484 implementation](./src/ERC5484/)
 
 ### Identity Usecase
 
@@ -24,11 +24,3 @@ From the perspective of the soul, this token acts as a certificate of authentici
 
 When I log into other web3 Dapps that support the ERC721 NFT standard, my Soulbound token will be supported.
 It can be used in conjunction with other NFTs like ENS names, certifications, POAPs, social accounts, DeFi positions, Proof of Humanity, etc; to aggregate a sense of identity and confidence about personhood.
-
-### ERC5484 Overview
-_**[Original ERC Specification](https://eips.ethereum.org/EIPS/eip-5484).**_
-
-This ERC extends the basic ERC721 NFT standard, imposing the following rules:
-* Tokens cannot be transferred
-* Tokens can only be minted and burned
-* BurnAuth determines _who_ can burn.
