@@ -39,13 +39,21 @@ contract IssuerSoulboundTokenTest is Test {
 
     function testIssueOnlyIssuerAdminReverts() public {
         vm.startPrank(s_admin);
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()
+            )
+        );
         s_token.issue(s_receiver, 0);
         vm.stopPrank();
     }
 
     function testIssueOnlyIssuerRandomAddressReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()
+            )
+        );
         s_token.issue(s_receiver, 0);
     }
 
@@ -75,13 +83,21 @@ contract IssuerSoulboundTokenTest is Test {
 
     function testRevokeOnlyIssuerAdminReverts() public {
         vm.startPrank(s_admin);
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()
+            )
+        );
         s_token.revoke(s_receiver, 0);
         vm.stopPrank();
     }
 
     function testRevokeOnlyIssuerRandomAddressReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()
+            )
+        );
         s_token.revoke(s_receiver, 0);
     }
 
@@ -126,13 +142,21 @@ contract IssuerSoulboundTokenTest is Test {
 
     function testReissueOnlyIssuerAdminReverts() public {
         vm.startPrank(s_admin);
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()
+            )
+        );
         s_token.reissue(s_receiver, s_receiver, 0);
         vm.stopPrank();
     }
 
     function testReissueOnlyIssuerRandomAddressReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()
+            )
+        );
         s_token.reissue(s_receiver, s_receiver, 0);
     }
 

@@ -6,7 +6,6 @@ import {AdminCanPause, Pausable} from "../src/AdminCanPause.sol";
 import {IAccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract AdminCanPauseTest is Test {
-
     AdminCanPause private s_target;
 
     function setUp() public {
@@ -27,7 +26,11 @@ contract AdminCanPauseTest is Test {
     function testPauseWrongRoleReverts() public {
         address random = address(123);
         vm.startPrank(random);
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector , random, s_target.DEFAULT_ADMIN_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, random, s_target.DEFAULT_ADMIN_ROLE()
+            )
+        );
         s_target.pause();
         vm.stopPrank();
     }
@@ -46,7 +49,11 @@ contract AdminCanPauseTest is Test {
     function testUnpaiseWrongRoleReverts() public {
         address random = address(123);
         vm.startPrank(random);
-        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector , random, s_target.DEFAULT_ADMIN_ROLE()));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                IAccessControl.AccessControlUnauthorizedAccount.selector, random, s_target.DEFAULT_ADMIN_ROLE()
+            )
+        );
         s_target.unpause();
         vm.stopPrank();
     }

@@ -5,7 +5,6 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
 contract AdminCanPause is AccessControl, Pausable {
-
     constructor(address admin) {
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
     }
@@ -17,5 +16,4 @@ contract AdminCanPause is AccessControl, Pausable {
     function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _unpause();
     }
-
 }

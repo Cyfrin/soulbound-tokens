@@ -35,9 +35,9 @@ contract IssuerSoulboundToken is IERC5484, ERC721, AdminCanPause {
     ///         1. revoke them from this contract.
     /// @param issuer The issuer role of the contract. This role can issue and revoke soulbound tokens.
     ///     This should be a secure EOA that can issue and revoke tokens based on offchain criteria.
-    constructor(address admin, address issuer) 
-        ERC721("Cyfrin Soulbound Token ERC5484", "CYFRIN5484") 
-        AdminCanPause(admin) 
+    constructor(address admin, address issuer)
+        ERC721("Cyfrin Soulbound Token ERC5484", "CYFRIN5484")
+        AdminCanPause(admin)
     {
         _grantRole(ISSUER_ROLE, issuer);
     }
