@@ -2,20 +2,28 @@
 pragma solidity 0.8.26;
 
 import {Test, console} from "forge-std/Test.sol";
-import {IssuerSoulboundToken, IERC5484, IERC721, IERC165, Ownable} from "../src/ERC5484/IssuerSoulboundToken.sol";
+import {IssuerSoulboundToken, AdminCanPause} from "../src/ERC5484/IssuerSoulboundToken.sol";
+import {IAccessControl, AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
+import {IERC5484} from "../src/ERC5484/IERC5484.sol";
+import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 contract IssuerSoulboundTokenTest is Test {
+    address private constant s_admin = address(0xabcdef123);
     address private constant s_issuer = address(0x123456789);
     address private constant s_receiver = address(0x987654321);
     IssuerSoulboundToken private s_token;
 
     function setUp() public {
         vm.startPrank(s_issuer);
-        s_token = new IssuerSoulboundToken();
+        s_token = new IssuerSoulboundToken(s_admin, s_issuer);
         vm.stopPrank();
     }
 
     // Issuer Only Soulbound Actions
+
+    // Issue
 
     function testIssueSuccess() public {
         vm.startPrank(s_issuer);
@@ -29,10 +37,28 @@ contract IssuerSoulboundTokenTest is Test {
         assertEq(s_token.balanceOf(s_receiver), 1);
     }
 
-    function testIssueOnlyOwnerReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(this)));
+    function testIssueOnlyIssuerAdminReverts() public {
+        vm.startPrank(s_admin);
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
+        s_token.issue(s_receiver, 0);
+        vm.stopPrank();
+    }
+
+    function testIssueOnlyIssuerRandomAddressReverts() public {
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
         s_token.issue(s_receiver, 0);
     }
+
+    function testIssuePausedReverts() public {
+        vm.startPrank(s_admin);
+        s_token.pause();
+        changePrank(s_issuer);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        s_token.issue(s_receiver, 0);
+        vm.stopPrank();
+    }
+
+    // Revoke
 
     function testRevokeSuccess() public {
         vm.startPrank(s_issuer);
@@ -47,9 +73,27 @@ contract IssuerSoulboundTokenTest is Test {
         assertEq(s_token.balanceOf(s_receiver), 0);
     }
 
-    function testRevokeOnlyOwnerReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(this)));
+    function testRevokeOnlyIssuerAdminReverts() public {
+        vm.startPrank(s_admin);
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
         s_token.revoke(s_receiver, 0);
+        vm.stopPrank();
+    }
+
+    function testRevokeOnlyIssuerRandomAddressReverts() public {
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
+        s_token.revoke(s_receiver, 0);
+    }
+
+    function testRevokePausedReverts() public {
+        vm.startPrank(s_issuer);
+        s_token.issue(s_receiver, 0);
+        changePrank(s_admin);
+        s_token.pause();
+        changePrank(s_issuer);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        s_token.revoke(s_receiver, 0);
+        vm.stopPrank();
     }
 
     function testRevokeTokenDoesNotBelongToAddressReverts() public {
@@ -61,6 +105,8 @@ contract IssuerSoulboundTokenTest is Test {
 
         vm.stopPrank();
     }
+
+    // Reissue
 
     function testReissueSuccess() public {
         vm.startPrank(s_issuer);
@@ -78,9 +124,27 @@ contract IssuerSoulboundTokenTest is Test {
         assertEq(s_token.balanceOf(s_receiver), 0);
     }
 
-    function testReissueOnlyOwnerReverts() public {
-        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(this)));
+    function testReissueOnlyIssuerAdminReverts() public {
+        vm.startPrank(s_admin);
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, s_admin, s_token.ISSUER_ROLE()));
         s_token.reissue(s_receiver, s_receiver, 0);
+        vm.stopPrank();
+    }
+
+    function testReissueOnlyIssuerRandomAddressReverts() public {
+        vm.expectRevert(abi.encodeWithSelector(IAccessControl.AccessControlUnauthorizedAccount.selector, address(this), s_token.ISSUER_ROLE()));
+        s_token.reissue(s_receiver, s_receiver, 0);
+    }
+
+    function testReissuePausedReverts() public {
+        vm.startPrank(s_issuer);
+        s_token.issue(s_receiver, 0);
+        changePrank(s_admin);
+        s_token.pause();
+        changePrank(s_issuer);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        s_token.reissue(s_receiver, s_receiver, 0);
+        vm.stopPrank();
     }
 
     // ERC 5484
